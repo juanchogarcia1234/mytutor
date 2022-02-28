@@ -1,22 +1,20 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
-class App extends React.Component {
-  state = { apiResponse: "" };
+import { Authenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 
-  callAPI() {
-    fetch("http://localhost:9000/testAPI")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }));
-  }
-
-  componentWillMount() {
-    this.callAPI();
-  }
-  render() {
-    return <p className="App-intro">;{this.state.apiResponse}</p>;
-  }
+function App() {
+  return (
+    <Authenticator>
+      {({ signOut, user }) => (
+        <div className="App">
+          <p>Hey {user.username}, welcome to my channel, with auth!</p>
+          <button onClick={signOut}>Sign out</button>
+        </div>
+      )}
+    </Authenticator>
+  );
 }
 
 export default App;
